@@ -1,4 +1,9 @@
+import time
+import yaml
+from yaml.loader import SafeLoader
 import streamlit as st
+import streamlit_authenticator as stauth
+from streamlit_extras.switch_page_button import switch_page
 
 st.set_page_config(
     page_title="BRIDGE",
@@ -6,15 +11,26 @@ st.set_page_config(
 )
 
 st.title("Sign-up! ✍️")
-st.markdown("## This is a placeholder")
+st.markdown("### Welcome to BRIDGE 🌉")
 
-# inputs
-email = st.text_input('Your e-mail*', '')
-username = st.text_input('Username*', '')
-pwd = st.text_input('Password*', '', type='password')
+# load authenticator
+with open('./streamlit-authenticator-config.yaml') as file:
+    auth_config = yaml.load(file, Loader=SafeLoader)
 
-# centered sign-up button
-col1, col2, col3 , col4, col5 = st.columns(5)
-with col3 :
-    center_button = st.button('Sign-up!', type='primary')
+authenticator = stauth.Authenticate(
+    auth_config['credentials'],
+    auth_config['cookie']['name'],
+    auth_config['cookie']['key'],
+    auth_config['cookie']['expiry_days'],
+    auth_config['preauthorized']
+)
 
+try:
+    if authenticator.register_user('Register user', preauthorization=False):
+        with open('./streamlit-authenticator-config.yaml', 'w') as file:
+            yaml.dump(auth_config, file, default_flow_style=False)
+        st.success('You registered successfully! You will be redirected to the login page momentarily...')
+        time.sleep(2)
+        switch_page("login or logout")
+except Exception as e:
+    st.error(e)

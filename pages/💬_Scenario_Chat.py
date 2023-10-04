@@ -1,4 +1,14 @@
 import streamlit as st
+from streamlit_extras.switch_page_button import switch_page
+import time
+
+if "authentication_status" not in st.session_state or not st.session_state["authentication_status"]:
+    st.warning("You are not logged in! redirecting to login page...")
+    # wait for a few seconds
+    time.sleep(2)
+    
+    switch_page("login or logout")
+
 
 if "my_input" not in st.session_state:
     st.session_state["my_input"] = ""
