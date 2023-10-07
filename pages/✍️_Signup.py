@@ -30,7 +30,7 @@ try:
         with open('./streamlit-authenticator-config.yaml', 'w') as file:
             yaml.dump(auth_config, file, default_flow_style=False)
         st.success('You registered successfully! You will be redirected to the login page momentarily...')
-        time.sleep(2)
-        switch_page("login or logout")
+        time.sleep(1.5)
+        switch_page("login")
 except Exception as e:
     st.error(e)

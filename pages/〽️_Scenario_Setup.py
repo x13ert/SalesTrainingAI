@@ -1,11 +1,15 @@
 import streamlit as st
 import time
 from streamlit_extras.switch_page_button import switch_page
+from Utils import hide_logout_login_pages
 
 st.set_page_config(
     page_title="BRIDGE",
     page_icon="🌉",
 )
+
+# hide/unhide logout/login pages
+hide_logout_login_pages("〽️_Scenario_Setup.py")
 
 # redirect to login if needed
 if "authentication_status" not in st.session_state or not st.session_state["authentication_status"]:
@@ -13,7 +17,7 @@ if "authentication_status" not in st.session_state or not st.session_state["auth
     # wait for a few seconds
     time.sleep(2)
     
-    switch_page("login or logout")
+    switch_page("login")
 
 st.title("Scenario setup! ✍️")
 st.markdown("## Set up your scenario here!")

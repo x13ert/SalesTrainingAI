@@ -1,10 +1,14 @@
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
+from Utils import hide_logout_login_pages
 
 st.set_page_config(
     page_title="BRIDGE",
     page_icon="🌉",
 )
+
+# hide/unhide logout/login pages
+hide_logout_login_pages("Home.py")
 
 st.title("BRIDGE 🌉")
 st.markdown("# Your BRIDGE to better SALES !")
@@ -16,4 +20,5 @@ st.markdown("Our Roleplay Bot is not your ordinary training program. It's your v
 # centered button
 col1, col2, col3 , col4, col5 = st.columns(5)
 with col3 :
-    center_button = st.link_button('Get started!', type='primary', url='/Signup', use_container_width=True)
+    center_button = st.link_button('Get started!', type='primary', url='/Login_or_Logout', use_container_width=True)
+
