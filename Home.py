@@ -20,5 +20,5 @@ st.markdown("Our Roleplay Bot is not your ordinary training program. It's your v
 # centered button
 col1, col2, col3 , col4, col5 = st.columns(5)
 with col3 :
-    center_button = st.link_button('Get started!', type='primary', url='/Login_or_Logout', use_container_width=True)
+    center_button = st.link_button('Get started!', type='primary', url='/Login', use_container_width=True)
 
