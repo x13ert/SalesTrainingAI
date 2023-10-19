@@ -32,6 +32,39 @@ def create_chat_completion():
     messages = st.session_state['memory'].chat_memory.messages
     new_message = chat.invoke(messages).content
     st.session_state['memory'].chat_memory.add_ai_message(new_message)
+    return new_message
+
+def populate_chat():
+
+    # array to hold chat messages
+    chat_messages = []
+
+    # chat template
+    for index, message in enumerate(st.session_state['memory'].load_memory_variables({})['chat_history']):
+
+        # skip the first message
+        if index == 0:
+            continue
+
+        if isinstance(message, HumanMessage):      
+            # with ph:             
+                human_msg = st.chat_message("human")
+                human_msg.write(message.content)
+                # add the message to the chat messages array
+                chat_messages.append(human_msg)
+        elif isinstance(message, AIMessage):
+            # with ph: 
+                ai_msg = st.chat_message("ai")
+                ai_msg.write(message.content)
+                chat_messages.append(ai_msg)
+
+    return chat_messages
+
+def clear_chat(messages):
+    for message in messages:
+        del message
+
+    
 
 # if the scenario_has_been_setup session state variable doesn't exist, redirect to scenario setup
 if "scenario_has_been_setup" not in st.session_state:
@@ -82,23 +115,19 @@ st.markdown(f"***Customer persona:*** {st.session_state['scenario_customer_perso
 st.markdown(f"***Scenario:*** {st.session_state['scenario_details'] or 'Not provided'}")
 st.markdown(f"***Level:*** {st.session_state['scenario_level']}")
 
+# chat placeholder
+# ph = st.empty()
+
 prompt = st.chat_input("Say something")
 if prompt:
+     # add message to history
     st.session_state['memory'].chat_memory.add_user_message(prompt)
-    create_chat_completion()
+    populate_chat()
+    with st.spinner("Waiting for response..."):
+        new_message = create_chat_completion()
+        ai_msg = st.chat_message("ai")
+        ai_msg.write(new_message)
+else:
+    populate_chat()
 
-# chat template
-for index, message in enumerate(st.session_state['memory'].load_memory_variables({})['chat_history']):
 
-    # skip the first message
-    if index == 0:
-        continue
-
-    if isinstance(message, HumanMessage):      
-        # with ph:             
-            bot_msg = st.chat_message("human")
-            bot_msg.write(message.content)
-    elif isinstance(message, AIMessage):
-        # with ph: 
-            human_msg = st.chat_message("ai")
-            human_msg.write(message.content)
