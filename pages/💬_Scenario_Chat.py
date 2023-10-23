@@ -82,7 +82,7 @@ if not st.session_state["scenario_has_been_setup"]:
     st.session_state['memory'] = ConversationBufferMemory(memory_key = "chat_history", input_key='question', output_key='answer', return_messages=True)
     st.session_state['memory'].chat_memory.add_ai_message(f"""This is a Sales / Customer Service Training Roleplay Prompt. You are playing the role of an excellent, friendly teacher and coach who helps teach via roleplay.
 
-    During roleplay, I will play the role of the learner. You will never play my role. I will never play as the customer. You will control/play the role of all other characters. The amount of characters will be determined by the scenario - you can choose how many will be appropriate for learning purposes.
+    During roleplay, I will play the role of the customer service representative (the learner). You will never play my role. I will never play as the customer. You will play the role of the customer and all other characters. The customer does not know who the learner is, such as their name, unless they specifically mention it. The amount of characters will be determined by the scenario - you can choose how many will be appropriate for learning purposes.
 
     Fields with a * are mandatory for the learner to provide details about, while any fields without * can be left blank, and you (ChatGPT) will fill them in for the user, with random but appropriate information. During the roleplay, try to maintain immersion by only replying to the characters you are controlling. Do not explain the rules of roleplay unless asked and let the roleplay proceed as though it was a regular conversation.
 
@@ -98,7 +98,7 @@ if not st.session_state["scenario_has_been_setup"]:
 
     ----
 
-    Create a challenging but fair scenario designed to teach them about the topic for learning. At the end, you will give them feedback about their performance that includes what they did right, what they could improve, and a score from 1 to 10 with 10 being the highest. Your next message should describe the scenario and ask them to begin roleplay, nothing else""")
+    Create a challenging but fair scenario designed to teach them about the topic for learning. Always stay in-character as the customer and do not provide feedback until I ask for it. Your next message should describe the scenario to the learner, since the learner is playing the role of the customer service representative, the scenario should be described in the third person and not to directly address the learner and then simulate the ringing of the phone, tell them that they have just picked up the phone and ask them to begin roleplay, nothing else""")
 
     # create the first chat completion, display spinner while waiting
     with st.spinner("Generating scenario..."):
@@ -129,5 +129,14 @@ if prompt:
         ai_msg.write(new_message)
 else:
     populate_chat()
+
+# something should show up here saying Finished? Click here to give feedback
+if st.button("Finished? Click here to continue", type="primary"):
+    # save the chat history to a session state variable
+    st.session_state["chat_memory"] = st.session_state['memory'].chat_memory
+    st.session_state["feedback_given"] = ""
+
+    # switch to feedback page
+    switch_page("feedback")
 
 
