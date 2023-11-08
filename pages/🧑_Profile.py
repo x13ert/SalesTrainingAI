@@ -21,7 +21,9 @@ if "authentication_status" not in st.session_state or not st.session_state["auth
 
 st.title("Your Profile 🧑")
 st.markdown("## Change your profile settings here!")
-st.markdown("( This feature has not been implemented yet! )")
+st.markdown("( This feature is currently unavailable )")
+
+st.stop()
 
 # inputs
 username = st.text_input('Your username (this is how the AI will address you)*', '')

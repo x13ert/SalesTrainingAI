@@ -29,6 +29,7 @@ st.markdown("## Set up your scenario here!")
 with st.form("scenario_setup"):
     # inputs
     product = st.text_area('Product*', '', placeholder='Describe the product you want to sell')
+    your_role = st.text_area('Your role', '', placeholder='Want to practice selling as a specific role? Describe it here! Leave blank if you want to practice selling as a customer service representative.')
     customer_persona = st.text_area('Customer persona', '', placeholder='Want to practice selling to a specific customer persona? Describe them here! Leave blank if you want to practice selling to a generic customer.')
     scenario = st.text_area('Scenario', '', placeholder='Do you have a scenario in mind? A location, or niche details that you\'d like to test? Be as specific as possible!"')
     level = st.selectbox('Level*', ('Easy', 'Medium', 'Hard'), index=1)
@@ -52,6 +53,7 @@ with st.form("scenario_setup"):
 
             st.session_state["scenario_has_been_setup"] = False
             st.session_state["scenario_product"] = product
+            st.session_state["scenario_your_role"] = your_role
             st.session_state["scenario_customer_persona"] = customer_persona
             st.session_state["scenario_details"] = scenario
             st.session_state["scenario_level"] = level

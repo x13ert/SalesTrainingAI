@@ -1,7 +1,8 @@
 python-dotenv
 streamlit
 streamlit-extras
-streamlit-authenticator
 hydralit-components
 openai
 langchain
+mysqlclient
+SQLAlchemy

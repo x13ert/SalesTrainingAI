@@ -48,4 +48,5 @@ def hide_logout_login_pages(current_page):
     else:
         delete_page(current_page, "Login")
         add_page(current_page, "Logout")
+    delete_page(current_page, "Profile")
         
