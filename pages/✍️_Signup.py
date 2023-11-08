@@ -2,7 +2,6 @@ import time
 import yaml
 from yaml.loader import SafeLoader
 import streamlit as st
-import streamlit_authenticator as stauth
 from streamlit_extras.switch_page_button import switch_page
 
 st.set_page_config(
