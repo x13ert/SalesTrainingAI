@@ -2,7 +2,7 @@ python-dotenv
 streamlit
 streamlit-extras
 hydralit-components
-openai
+openai==0.28.1
 langchain
 mysqlclient
 SQLAlchemy
